@@ -1,10 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { Store } from "./stores/Store";
+import { StoreProvider } from "./stores/StoreHelper";
+import { CssBaseline } from "@material-ui/core";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = new Store();
+ReactDOM.render(
+  <StoreProvider value={store}>
+    <CssBaseline />
+    <App />
+  </StoreProvider>,
+  document.getElementById("root")
+);
+(document as any).store = store;
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
