@@ -8,4 +8,7 @@ export class Store {
   @observable name: string = "zz";
 
   @observable todoStore: TodoStore = new TodoStore();
+  constructor() {
+    this.todoStore.listen();
+  }
 }
