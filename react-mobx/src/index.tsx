@@ -31,8 +31,6 @@ ReactDOM.render(
   <StoreProvider value={store}>
     <CssBaseline />
     <App />
-    <div id="firebaseui-auth-container"></div>
-    <div id="loader">Loading...</div>
   </StoreProvider>,
   document.getElementById("root")
 );
