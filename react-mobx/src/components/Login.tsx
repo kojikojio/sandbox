@@ -3,6 +3,7 @@ import FirebaseAuth from "react-firebaseui/FirebaseAuth";
 import firebase from "firebase";
 
 const uiConfig = {
+  signInSuccessUrl: "/todos",
   signInOptions: [firebase.auth.GithubAuthProvider.PROVIDER_ID]
 };
 
