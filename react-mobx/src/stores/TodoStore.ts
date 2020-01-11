@@ -1,6 +1,6 @@
 import { observable, computed, action } from "mobx";
 import "firebase/firestore";
-import { db } from "../index";
+import { db } from "../firebase";
 
 export class TodoStore {
   @observable todos: Todo[] = [];
