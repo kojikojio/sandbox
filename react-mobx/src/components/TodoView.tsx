@@ -3,6 +3,7 @@ import { useObserver } from "mobx-react";
 import { useStore } from "../stores/StoreHelper";
 import TodoItem from "./TodoItem";
 import { List, TextField, Button, Grid, Typography } from "@material-ui/core";
+import { Redirect } from "react-router-dom";
 
 const TodoView = () => {
   const store = useStore();
@@ -20,8 +21,9 @@ const TodoView = () => {
   }
   return useObserver(() => (
     <>
+      {!store.isLogin ? <Redirect to={"/"} /> : ""}
       <Typography variant="h6" gutterBottom>
-        TODOアプリ
+        TODO
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>

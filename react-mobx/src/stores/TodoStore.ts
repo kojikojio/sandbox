@@ -3,18 +3,24 @@ import "firebase/firestore";
 import { db } from "../firebase";
 
 export class TodoStore {
+  unsubscribe: () => void = () => {};
   @observable todos: Todo[] = [];
 
   listen() {
     const self = this;
-    db.collection("todos").onSnapshot(function(querySnapshot) {
-      const cities: Todo[] = [];
-      querySnapshot.forEach(function(doc) {
-        cities.push(new Todo(doc.id, doc.data().title));
+    this.unsubscribe = db
+      .collection("todos")
+      .onSnapshot(function(querySnapshot) {
+        const cities: Todo[] = [];
+        querySnapshot.forEach(function(doc) {
+          cities.push(new Todo(doc.id, doc.data().title));
+        });
+        console.log("Current cities in CA: ", cities.join(", "));
+        self.setTodos(cities);
       });
-      console.log("Current cities in CA: ", cities.join(", "));
-      self.setTodos(cities);
-    });
+  }
+  detach() {
+    this.unsubscribe();
   }
 
   @action.bound
