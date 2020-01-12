@@ -4,10 +4,12 @@ import TodoView from "./components/TodoView";
 import { Container } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
+import MyAppBar from "./components/MyAppBar";
 
 const App: React.FC = () => {
   return (
     <Router>
+      <MyAppBar></MyAppBar>
       <nav>
         <ul>
           <li>
