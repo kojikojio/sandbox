@@ -45,7 +45,7 @@ const MyAppBar: React.FC = () => {
         </Typography>
         <Button
           component={Link}
-          to={"/todos"}
+          to={"/login"}
           className={classes.menuButton}
           color="inherit"
         >

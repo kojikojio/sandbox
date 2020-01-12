@@ -10,19 +10,6 @@ const App: React.FC = () => {
   return (
     <Router>
       <MyAppBar></MyAppBar>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/todos">Todos</Link>
-          </li>
-        </ul>
-      </nav>
       <Container maxWidth="sm">
         <Switch>
           <Route path="/login">
