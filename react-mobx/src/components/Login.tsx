@@ -8,10 +8,6 @@ const uiConfig = {
 };
 
 const Login = () => {
-  return (
-    <>
-      <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />{" "}
-    </>
-  );
+  return <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />;
 };
 export default Login;

@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useStore } from "../stores/StoreHelper";
 import { useObserver } from "mobx-react";
 
@@ -47,8 +47,8 @@ const MyAppBar: React.FC = () => {
   };
 
   const store = useStore();
-  console.log(store.isLogin);
   const classes = useStyles();
+  const location = useLocation();
   return useObserver(() => (
     <AppBar position="static">
       <Toolbar>
@@ -63,7 +63,7 @@ const MyAppBar: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-          Todoアプリ{store.isLogin ? "ログイン中" : "ログインしてない"}
+          SANDBOX
         </Typography>
         {store.isLogin ? (
           <>
@@ -101,7 +101,8 @@ const MyAppBar: React.FC = () => {
             to={"/login"}
             className={classes.menuButton}
             color="inherit"
-            disabled={store.isLogin}
+            disabled={location.pathname === "/login"}
+            variant="outlined"
           >
             Login
           </Button>
