@@ -3,20 +3,22 @@ import "firebase/firestore";
 import { db } from "../firebase";
 
 export class TodoStore {
+  uid: string | undefined = undefined;
   unsubscribe: () => void = () => {};
   @observable todos: Todo[] = [];
 
-  listen() {
-    const self = this;
+  listen(uid: string) {
+    this.uid = uid;
     this.unsubscribe = db
+      .collection("accounts")
+      .doc(uid)
       .collection("todos")
-      .onSnapshot(function(querySnapshot) {
-        const cities: Todo[] = [];
+      .onSnapshot(querySnapshot => {
+        const todos: Todo[] = [];
         querySnapshot.forEach(function(doc) {
-          cities.push(new Todo(doc.id, doc.data().title));
+          todos.push(new Todo(doc.id, doc.data().title, doc.data().finished));
         });
-        console.log("Current cities in CA: ", cities.join(", "));
-        self.setTodos(cities);
+        this.setTodos(todos);
       });
   }
   detach() {
@@ -29,7 +31,9 @@ export class TodoStore {
   }
 
   addTodo(title: string) {
-    db.collection("todos")
+    db.collection("accounts")
+      .doc(this.uid)
+      .collection("todos")
       .add({
         title,
         finished: false
@@ -43,9 +47,18 @@ export class TodoStore {
   }
   @action.bound
   setFinished(id: string, finished: boolean) {
-    this.todos
-      .filter(todo => todo.id === id)
-      .forEach(todo => (todo.finished = finished));
+    console.log(this.uid, id, finished);
+    db.collection("accounts")
+      .doc(this.uid)
+      .collection("todos")
+      .doc(id)
+      .update({ finished })
+      .then(() => {
+        console.log("Document updated");
+      })
+      .catch(function(error) {
+        console.error("Error update document: ", error);
+      });
   }
 
   @computed
@@ -63,8 +76,9 @@ export class Todo {
   title = "";
   finished = false;
 
-  constructor(id: string, title: string) {
+  constructor(id: string, title: string, finished: boolean) {
     this.id = id;
     this.title = title;
+    this.finished = finished;
   }
 }

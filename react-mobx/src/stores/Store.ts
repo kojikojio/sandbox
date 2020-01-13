@@ -16,8 +16,9 @@ export class Store {
     firebase.auth().onAuthStateChanged(user => {
       this.setInitialized(true);
       this.setUser(user);
+      console.log();
       if (user) {
-        this.todoStore.listen();
+        this.todoStore.listen(user.uid);
       } else {
         this.todoStore.detach();
       }
