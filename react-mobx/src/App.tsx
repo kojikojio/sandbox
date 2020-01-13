@@ -8,6 +8,7 @@ import MyAppBar from "./components/MyAppBar";
 import { useStore } from "./stores/StoreHelper";
 import TopPage from "./components/TopPage";
 import TopWithoutLogin from "./components/TopWithoutLogin";
+import Loading from "./components/Loading";
 import { useObserver } from "mobx-react";
 
 const Top: React.FC = () => {
@@ -18,24 +19,31 @@ const Top: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  return (
-    <Router>
-      <MyAppBar></MyAppBar>
-      <Container maxWidth="sm">
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/todos">
-            <TodoView />
-          </Route>
-          <Route path="/">
-            <Top />
-          </Route>
-        </Switch>
-      </Container>
-    </Router>
-  );
+  const store = useStore();
+  return useObserver(() => (
+    <>
+      {store.isInitialized ? (
+        <Router>
+          <MyAppBar></MyAppBar>
+          <Container maxWidth="sm">
+            <Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/todos">
+                <TodoView />
+              </Route>
+              <Route path="/">
+                <Top />
+              </Route>
+            </Switch>
+          </Container>
+        </Router>
+      ) : (
+        <Loading />
+      )}
+    </>
+  ));
 };
 
 export default App;

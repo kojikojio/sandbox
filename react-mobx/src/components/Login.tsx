@@ -3,11 +3,17 @@ import FirebaseAuth from "react-firebaseui/FirebaseAuth";
 import firebase from "firebase";
 
 const uiConfig = {
+  // signInFlow: "popup",
   signInSuccessUrl: "/todos",
   signInOptions: [firebase.auth.GithubAuthProvider.PROVIDER_ID]
 };
 
 const Login = () => {
-  return <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />;
+  return (
+    <div>
+      次のいずれかの認証プロバイダを使ってログインしてください。
+      <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+    </div>
+  );
 };
 export default Login;

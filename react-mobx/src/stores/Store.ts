@@ -6,14 +6,15 @@ configure({
   enforceActions: "always"
 });
 export class Store {
-  @observable name: string = "zz";
+  // Firebase auth に接続したら true になる。それ以降はずっと true
+  @observable isInitialized: boolean = false;
   @observable isLogin: boolean = false;
   @observable todoStore: TodoStore = new TodoStore();
 
   constructor() {
     const self = this;
     firebase.auth().onAuthStateChanged(function(user) {
-      console.log(user);
+      self.setInitialized(true);
       if (user) {
         self.setLogin(true);
       } else {
@@ -26,6 +27,11 @@ export class Store {
   }
   logout() {
     firebase.auth().signOut();
+  }
+
+  @action.bound
+  private setInitialized(isInitialized: boolean) {
+    this.isInitialized = isInitialized;
   }
 
   @action.bound
