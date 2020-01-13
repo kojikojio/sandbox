@@ -65,7 +65,7 @@ const MyAppBar: React.FC = () => {
         <Typography variant="h6" className={classes.title}>
           SANDBOX
         </Typography>
-        {store.isLogin ? (
+        {store.user ? (
           <>
             <IconButton
               aria-label="account of current user"
@@ -101,7 +101,7 @@ const MyAppBar: React.FC = () => {
             to={"/login"}
             className={classes.menuButton}
             color="inherit"
-            disabled={location.pathname === "/login"}
+            disabled={!store.isInitialized || location.pathname === "/login"}
             variant="outlined"
           >
             Login

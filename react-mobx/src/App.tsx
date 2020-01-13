@@ -14,35 +14,33 @@ import { useObserver } from "mobx-react";
 const Top: React.FC = () => {
   const store = useStore();
   return useObserver(() => (
-    <>{store.isLogin ? <TopPage /> : <TopWithoutLogin />}</>
+    <>{store.user ? <TopPage /> : <TopWithoutLogin />}</>
   ));
 };
 
 const App: React.FC = () => {
   const store = useStore();
   return useObserver(() => (
-    <>
+    <Router>
+      <MyAppBar></MyAppBar>
       {store.isInitialized ? (
-        <Router>
-          <MyAppBar></MyAppBar>
-          <Container maxWidth="sm">
-            <Switch>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/todos">
-                <TodoView />
-              </Route>
-              <Route path="/">
-                <Top />
-              </Route>
-            </Switch>
-          </Container>
-        </Router>
+        <Container maxWidth="sm">
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/todos">
+              <TodoView />
+            </Route>
+            <Route path="/">
+              <Top />
+            </Route>
+          </Switch>
+        </Container>
       ) : (
         <Loading />
       )}
-    </>
+    </Router>
   ));
 };
 

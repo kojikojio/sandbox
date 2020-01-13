@@ -21,7 +21,7 @@ const TodoView = () => {
   }
   return useObserver(() => (
     <>
-      {!store.isLogin ? <Redirect to={"/"} /> : ""}
+      {!store.user ? <Redirect to={"/"} /> : ""}
       <Typography variant="h6" gutterBottom>
         TODO
       </Typography>
