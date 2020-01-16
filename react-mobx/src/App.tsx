@@ -10,6 +10,7 @@ import TopPage from "./components/TopPage";
 import TopWithoutLogin from "./components/TopWithoutLogin";
 import Loading from "./components/Loading";
 import { useObserver } from "mobx-react";
+import Profile from "./components/Profile";
 
 const Top: React.FC = () => {
   const store = useStore();
@@ -31,6 +32,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/todos">
               <TodoView />
+            </Route>
+            <Route path="/profile">
+              <Profile />
             </Route>
             <Route path="/">
               <Top />

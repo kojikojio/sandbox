@@ -91,7 +91,9 @@ const MyAppBar: React.FC = () => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem component={Link} to={"/profile"} onClick={handleClose}>
+                My account
+              </MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </>
