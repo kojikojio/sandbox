@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "sandbox-5d106"
+  },
+  "targets": {
+    "sandbox-5d106": {
+      "hosting": {
+        "corp": [
+          "sandbox-5d106-corp"
+        ],
+        "app": [
+          "sandbox-5d106"
+        ]
+      }
+    }
   }
 }
