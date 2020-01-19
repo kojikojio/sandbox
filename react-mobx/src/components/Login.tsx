@@ -14,7 +14,6 @@ const uiConfig = {
 const Login = () => {
   return (
     <div>
-      次のいずれかの認証プロバイダを使ってログインしてください。
       <FirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
   );
