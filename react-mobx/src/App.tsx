@@ -2,7 +2,12 @@ import React from "react";
 import "./App.css";
 import TodoView from "./components/TodoView";
 import { Container } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 import Login from "./components/Login";
 import MyAppBar from "./components/MyAppBar";
 import { useStore } from "./stores/StoreHelper";
@@ -19,33 +24,47 @@ const Top: React.FC = () => {
   ));
 };
 
-const App: React.FC = () => {
+const Loaded = () => (
+  <Router>
+    <MyAppBar></MyAppBar>
+    <Container maxWidth="sm">
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/todos">
+          <TodoView />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+        <Route path="/">
+          <Top />
+        </Route>
+      </Switch>
+    </Container>
+  </Router>
+);
+
+const App: React.FC = props => {
   const store = useStore();
-  return useObserver(() => (
-    <Router>
-      <MyAppBar></MyAppBar>
-      {store.isInitialized ? (
-        <Container maxWidth="sm">
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/todos">
-              <TodoView />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-            <Route path="/">
-              <Top />
-            </Route>
-          </Switch>
-        </Container>
-      ) : (
-        <Loading />
-      )}
-    </Router>
-  ));
+  return useObserver(() => {
+    if (!store.isInitialized) {
+      return <Loading />;
+    }
+    if (!store.user) {
+      const next = encodeURIComponent(document.location.pathname);
+      return (
+        <Router>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Redirect to={"/login?n=" + next} />
+        </Router>
+      );
+    }
+    return <Loaded />;
+  });
 };
 
 export default App;
