@@ -14,14 +14,14 @@ export class Store {
 
   constructor() {
     firebase.auth().onAuthStateChanged(user => {
-      this.setUser(user);
-      this.setInitialized(true);
       console.log(user);
       if (user) {
         this.todoStore.listen(user.uid);
       } else {
         this.todoStore.detach();
       }
+      this.setUser(user);
+      this.setInitialized(true);
     });
   }
   logout() {

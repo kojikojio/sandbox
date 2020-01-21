@@ -39,9 +39,8 @@ const MyAppBar: React.FC = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const logout = () => {
+  const logout = async () => {
     store.logout();
-    location.pathname = "/login";
   };
 
   const store = useStore();

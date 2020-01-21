@@ -63,6 +63,9 @@ const App: React.FC = props => {
             <Route path="/login">
               <Login />
             </Route>
+            <Route exact path="/">
+              <Redirect to={"/login"} />
+            </Route>
             <Route path="/">
               <Redirect to={"/login?n=" + next} />
             </Route>
