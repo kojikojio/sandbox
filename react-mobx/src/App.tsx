@@ -30,7 +30,7 @@ const Loaded = () => (
     <Container maxWidth="sm">
       <Switch>
         <Route path="/login">
-          <Login />
+          <Redirect to={"/"} />
         </Route>
         <Route path="/todos">
           <TodoView />
@@ -49,20 +49,28 @@ const Loaded = () => (
 const App: React.FC = props => {
   const store = useStore();
   return useObserver(() => {
+    // 認証状態の取得が終わるまではLOADINGを表示する
     if (!store.isInitialized) {
       return <Loading />;
     }
+    // 未ログインの場合は、ログイン画面にリダイレクトする
     if (!store.user) {
       const next = encodeURIComponent(document.location.pathname);
+      console.log(document.location.pathname);
       return (
         <Router>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Redirect to={"/login?n=" + next} />
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/">
+              <Redirect to={"/login?n=" + next} />
+            </Route>
+          </Switch>
         </Router>
       );
     }
+    // ログイン済みの場合
     return <Loaded />;
   });
 };

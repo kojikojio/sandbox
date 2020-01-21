@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useStore } from "../stores/StoreHelper";
 import { useObserver } from "mobx-react";
 
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const MyAppBar: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  let history = useHistory();
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -42,8 +41,7 @@ const MyAppBar: React.FC = () => {
   };
   const logout = () => {
     store.logout();
-    setAnchorEl(null);
-    history.push("/");
+    location.pathname = "/login";
   };
 
   const store = useStore();
