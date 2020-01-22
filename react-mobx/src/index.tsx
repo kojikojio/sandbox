@@ -6,12 +6,15 @@ import * as serviceWorker from "./serviceWorker";
 import { Store } from "./stores/Store";
 import { StoreProvider } from "./stores/StoreHelper";
 import { CssBaseline } from "@material-ui/core";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const store = new Store();
 ReactDOM.render(
   <StoreProvider value={store}>
     <CssBaseline />
-    <App />
+    <Router>
+      <App />
+    </Router>
   </StoreProvider>,
   document.getElementById("root")
 );

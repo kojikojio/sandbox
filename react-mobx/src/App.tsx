@@ -2,12 +2,7 @@ import React from "react";
 import "./App.css";
 import TodoView from "./components/TodoView";
 import { Container } from "@material-ui/core";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Login from "./components/Login";
 import MyAppBar from "./components/MyAppBar";
 import { useStore } from "./stores/StoreHelper";
@@ -25,13 +20,10 @@ const Top: React.FC = () => {
 };
 
 const Loaded = () => (
-  <Router>
+  <>
     <MyAppBar></MyAppBar>
     <Container maxWidth="sm">
       <Switch>
-        <Route path="/login">
-          <Redirect to={"/"} />
-        </Route>
         <Route path="/todos">
           <TodoView />
         </Route>
@@ -43,34 +35,34 @@ const Loaded = () => (
         </Route>
       </Switch>
     </Container>
-  </Router>
+  </>
 );
 
 const App: React.FC = props => {
   const store = useStore();
+  const location = useLocation();
   return useObserver(() => {
     // 認証状態の取得が終わるまではLOADINGを表示する
     if (!store.isInitialized) {
       return <Loading />;
     }
+    // URLがログイン画面の場合はログイン画面を表示する
+    console.log(location);
+    const pathname = location.pathname;
+    if (pathname.startsWith("/login")) {
+      return <Login />;
+    }
     // 未ログインの場合は、ログイン画面にリダイレクトする
     if (!store.user) {
-      const next = encodeURIComponent(document.location.pathname);
-      console.log(document.location.pathname);
       return (
-        <Router>
-          <Switch>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/">
-              <Redirect to={"/login"} />
-            </Route>
-            <Route path="/">
-              <Redirect to={"/login?n=" + next} />
-            </Route>
-          </Switch>
-        </Router>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
+          <Route path="/">
+            <Redirect push to={"/login?n=" + encodeURIComponent(pathname)} />
+          </Route>
+        </Switch>
       );
     }
     // ログイン済みの場合
