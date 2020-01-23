@@ -100,7 +100,7 @@ const MyAppBar: React.FC = () => {
             to={"/login"}
             className={classes.menuButton}
             color="inherit"
-            disabled={!store.isInitialized || location.pathname === "/login"}
+            disabled={store.isInitializing || location.pathname === "/login"}
             variant="outlined"
           >
             Login

@@ -43,7 +43,7 @@ const App: React.FC = props => {
   const location = useLocation();
   return useObserver(() => {
     // 認証状態の取得が終わるまではLOADINGを表示する
-    if (!store.isInitialized) {
+    if (store.isInitializing) {
       return <Loading />;
     }
     // URLがログイン画面の場合はログイン画面を表示する
