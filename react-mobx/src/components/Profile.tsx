@@ -2,6 +2,8 @@ import React from "react";
 import { useStore } from "../stores/StoreHelper";
 import { useObserver } from "mobx-react";
 import { Grid, List, ListItem } from "@material-ui/core";
+import firebase from "firebase/app";
+
 
 const Profile = () => {
   const store = useStore();

@@ -1,6 +1,7 @@
 import React from "react";
 import FirebaseAuth from "react-firebaseui/FirebaseAuth";
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const uiConfig = {
   signInFlow: "redirect",

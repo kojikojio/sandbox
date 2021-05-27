@@ -1,14 +1,13 @@
 import { observable, configure, action } from "mobx";
 import { TodoStore } from "./TodoStore";
 import firebase from "../firebase";
-import { User } from "firebase";
 
 configure({
   enforceActions: "always"
 });
 export class Store {
   @observable isInitializing: boolean = true;
-  @observable user: User | null = null;
+  @observable user: firebase.User | null = null;
   @observable todoStore: TodoStore = new TodoStore();
 
   constructor() {
@@ -35,7 +34,7 @@ export class Store {
   }
 
   @action.bound
-  private setUser(user: User | null) {
+  private setUser(user: firebase.User | null) {
     this.user = user;
   }
 }
